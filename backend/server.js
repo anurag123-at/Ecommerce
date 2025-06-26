@@ -22,9 +22,8 @@ const __dirname = path.dirname(__filename);
 app.use(express.static(path.join(__dirname, '../frontend')));
 
 // CORS (allow frontend access)
-app.use(cors());
 app.use(cors({
-  origin: ['http://127.0.0.1:3000', 'http://localhost:3000'],
+  origin: 'https://ecommerce-d0gpt3889-anurag-tiwaris-projects-299dbd2a.vercel.app',
   credentials: true
 }));
 
@@ -57,3 +56,7 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`✅ Server running at http://localhost:${PORT}`);
 });
+
+
+
+
