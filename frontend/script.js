@@ -1,3 +1,5 @@
+const BASE_URL = "https://ecommerce-m8tq.onrender.com";
+
 // ----------------- SHOW PAGE -----------------
 function showpage(pageId) {
   const pages = document.querySelectorAll('.page');
@@ -13,7 +15,7 @@ function showpage(pageId) {
 
 // ----------------- UPDATE NAVBAR -----------------
 function updateNavbar() {
-  fetch('http://localhost:5000/api/users/check-auth', { credentials: 'include' })
+  fetch(`${BASE_URL}/api/users/check-auth`, { credentials: 'include' })
     .then(res => res.json())
     .then(data => {
       const navLinks = document.querySelectorAll('.nav a');
@@ -39,7 +41,7 @@ document.getElementById('signup-form').addEventListener('submit', async (event) 
   const password = document.getElementById('signup-password').value;
 
   try {
-    const res = await fetch('http://localhost:5000/api/users/signup', {
+    const res = await fetch(`${BASE_URL}/api/users/signup`, {
       method: 'POST',
       credentials: 'include',
       headers: { 'Content-Type': 'application/json' },
@@ -65,7 +67,7 @@ document.getElementById('login-form').addEventListener('submit', async (event) =
   const password = document.getElementById('login-password').value;
 
   try {
-    const res = await fetch('http://localhost:5000/api/users/login', {
+    const res = await fetch(`${BASE_URL}/api/users/login`, {
       method: 'POST',
       credentials: 'include',
       headers: { 'Content-Type': 'application/json' },
@@ -86,7 +88,7 @@ document.getElementById('login-form').addEventListener('submit', async (event) =
 
 // ----------------- LOGOUT -----------------
 function logoutUser() {
-  fetch('http://localhost:5000/api/users/logout', {
+  fetch(`${BASE_URL}/api/users/logout`, {
     method: 'POST',
     credentials: 'include'
   })
@@ -99,7 +101,7 @@ function logoutUser() {
 // ----------------- FETCH PRODUCTS -----------------
 async function fetchProducts() {
   try {
-    const res = await fetch('http://localhost:5000/api/products');
+    const res = await fetch(`${BASE_URL}/api/products`);
     if (!res.ok) throw new Error('Failed to fetch products');
     const products = await res.json();
     renderProducts(products);
@@ -142,7 +144,7 @@ function renderProducts(products) {
 
 // ----------------- ADD TO CART -----------------
 function addToCart(product) {
-  fetch('http://localhost:5000/api/cart', {
+  fetch(`${BASE_URL}/api/cart`, {
     method: 'POST',
     credentials: 'include',
     headers: { 'Content-Type': 'application/json' },
@@ -156,7 +158,7 @@ function addToCart(product) {
 // ----------------- FETCH CART -----------------
 async function fetchCart() {
   try {
-    const res = await fetch('http://localhost:5000/api/cart', {
+    const res = await fetch(`${BASE_URL}/api/cart`, {
       method: 'GET',
       credentials: 'include'
     });
@@ -190,7 +192,6 @@ function renderCart(cartItems) {
     cartList.appendChild(div);
   });
 
-  // Attach click handlers for all remove buttons
   document.querySelectorAll('.remove-btn').forEach(button => {
     button.addEventListener('click', async () => {
       const productId = button.dataset.id;
@@ -200,11 +201,10 @@ function renderCart(cartItems) {
   });
 }
 
-// ----------------------Remove from Cart ----------------------
-
+// ---------------------- REMOVE FROM CART ----------------------
 async function removeFromCart(productId) {
   try {
-    const res = await fetch(`http://localhost:5000/api/cart/${productId}`, {
+    const res = await fetch(`${BASE_URL}/api/cart/${productId}`, {
       method: 'DELETE',
       credentials: 'include'
     });
@@ -216,16 +216,10 @@ async function removeFromCart(productId) {
   }
 }
 
-
-
-
-
-
-
 // ----------------- INIT -----------------
 window.onload = async () => {
   try {
-    const res = await fetch('http://localhost:5000/api/users/check', { credentials: 'include' });
+    const res = await fetch(`${BASE_URL}/api/users/check`, { credentials: 'include' });
     const data = await res.json();
     if (data.loggedIn) {
       showpage('home');
