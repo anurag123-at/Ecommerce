@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🛍️ShopKaroIndia</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="logo">🛍️ShopKaroIndia</div>
+    <nav class="nav">
+      <a onclick="showpage('home')">Home</a>
+      <a onclick="showpage('cart')">Cart</a>
+      <a onclick="showpage('login')">Login</a>
+      <a onclick="showpage('signup')">Signup</a>
+      <!-- Logout link is appended dynamically -->
+    </nav>
+  </header>
+
+  <main>
+    <!-- HOME PAGE -->
+    <section id="home" class="page">
+      <h2>Products</h2>
+      <div id="product-list" class="product-grid"></div>
+    </section>
+
+    <!-- CART PAGE -->
+    <section id="cart" class="page">
+      <h2>Your Cart</h2>
+      <div id="cart-items"></div>
+    </section>
+
+    <!-- LOGIN PAGE -->
+    <section id="login" class="page">
+      <h2>Login</h2>
+      <form id="login-form">
+        <input type="email" id="login-email" placeholder="Email" required />
+        <input type="password" id="login-password" placeholder="Password" required />
+        <button type="submit">Login</button>
+      </form>
+      <p id="login-status"></p>
+    </section>
+
+    <!-- SIGNUP PAGE -->
+    <section id="signup" class="page">
+      <h2>Signup</h2>
+      <form id="signup-form" onsubmit="handleSignup(event)">
+        <input type="text" id="signup-name" placeholder="Name" required />
+        <input type="email" id="signup-email" placeholder="Email" required />
+        <input type="password" id="signup-password" placeholder="Password" required />
+        <button type="submit">Signup</button>
+      </form>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
