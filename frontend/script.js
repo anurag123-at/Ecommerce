@@ -16,16 +16,13 @@ function showpage(pageId) {
 // ----------------- UPDATE NAVBAR -----------------
 function updateNavbar() {
   fetch(`${BASE_URL}/api/users/check-auth`, { credentials: 'include' })
-    .then(async (res) => {
-        if (!res.ok) throw new Error("Auth check failed");
-        return res.json();
-      })
+    .then(res => res.ok ? res.json() : { loggedIn: false })
     .then(data => {
       const navLinks = document.querySelectorAll('.nav a');
-      navLinks.forEach(link => {
-        const page = link.getAttribute('onclick') || ''; // 🛠️ fix null issue
 
-        if (page.includes("'signup'") || page.includes("'login'")) {
+      navLinks.forEach(link => {
+        const onclickAttr = link.getAttribute('onclick') || '';
+        if (onclickAttr.includes("'signup'") || onclickAttr.includes("'login'")) {
           link.style.display = data.loggedIn ? 'none' : 'inline-block';
         } else {
           link.style.display = data.loggedIn ? 'inline-block' : 'none';
@@ -34,6 +31,9 @@ function updateNavbar() {
 
       const logoutLink = document.getElementById('logout-link');
       if (logoutLink) logoutLink.style.display = data.loggedIn ? 'inline-block' : 'none';
+    })
+    .catch(err => {
+      console.error('Navbar update failed:', err);
     });
 }
 
@@ -99,6 +99,10 @@ function logoutUser() {
     .then(() => {
       alert('Logged out');
       showpage('signup');
+    })
+    .catch(err => {
+      alert('Logout error');
+      console.error(err);
     });
 }
 
@@ -205,7 +209,7 @@ function renderCart(cartItems) {
   });
 }
 
-// ---------------------- REMOVE FROM CART ----------------------
+// ----------------- REMOVE FROM CART -----------------
 async function removeFromCart(productId) {
   try {
     const res = await fetch(`${BASE_URL}/api/cart/${productId}`, {
@@ -235,10 +239,16 @@ window.onload = async () => {
     showpage('login');
   }
 
-  const logoutLink = document.createElement('a');
-  logoutLink.id = 'logout-link';
-  logoutLink.innerText = 'Logout';
-  logoutLink.style.cursor = 'pointer';
-  logoutLink.onclick = logoutUser;
-  document.querySelector('.nav').appendChild(logoutLink);
+  // Create and add logout link only once
+  if (!document.getElementById('logout-link')) {
+    const logoutLink = document.createElement('a');
+    logoutLink.id = 'logout-link';
+    logoutLink.innerText = 'Logout';
+    logoutLink.style.cursor = 'pointer';
+    logoutLink.style.display = 'none';
+    logoutLink.onclick = logoutUser;
+    document.querySelector('.nav').appendChild(logoutLink);
+  }
+
+  updateNavbar();
 };
