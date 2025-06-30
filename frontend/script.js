@@ -219,7 +219,7 @@ async function removeFromCart(productId) {
 // ----------------- INIT -----------------
 window.onload = async () => {
   try {
-    const res = await fetch(`${BASE_URL}/api/users/check`, { credentials: 'include' });
+    const res = await fetch(`${BASE_URL}/api/users/check-auth`, { credentials: 'include' });
     const data = await res.json();
     if (data.loggedIn) {
       showpage('home');
