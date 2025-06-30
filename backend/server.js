@@ -32,16 +32,27 @@ app.use(cors({
 app.use(express.json());
 
 // ✅ Session middleware must be before route handlers
+// app.use(session({
+//   secret: process.env.SESSION_SECRET || 'defaultSecretKey',
+//   resave: false,
+//   saveUninitialized: false,
+//   cookie: {
+//     // secure: false, // set to true if using HTTPS
+//     secure: true, // Use true if your site is served over HTTPS
+//     maxAge: 1000 * 60 * 60 * 24 // 1 day
+//   }
+// }));
+
 app.use(session({
-  secret: process.env.SESSION_SECRET || 'defaultSecretKey',
+  secret: 'yourSecretKey',
   resave: false,
   saveUninitialized: false,
   cookie: {
-    // secure: false, // set to true if using HTTPS
-    secure: true, // Use true if your site is served over HTTPS
-    maxAge: 1000 * 60 * 60 * 24 // 1 day
+    secure: true,         // Required for HTTPS
+    sameSite: 'none'      // Required for cross-origin
   }
 }));
+
 
 // ✅ Routes (after session is set up)
 app.use('/api/users', userRoutes);
