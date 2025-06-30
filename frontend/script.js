@@ -16,7 +16,10 @@ function showpage(pageId) {
 // ----------------- UPDATE NAVBAR -----------------
 function updateNavbar() {
   fetch(`${BASE_URL}/api/users/check-auth`, { credentials: 'include' })
-    .then(res => res.json())
+    .then(async (res) => {
+        if (!res.ok) throw new Error("Auth check failed");
+        return res.json();
+      })
     .then(data => {
       const navLinks = document.querySelectorAll('.nav a');
       navLinks.forEach(link => {
