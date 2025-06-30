@@ -1,7 +1,7 @@
 const BASE_URL = "https://ecommerce-m8tq.onrender.com";
 function showpage(pageId) {
-console.log('Showing page:', pageId); // ✅ Debug line
-
+  console.log('Showing page:', pageId); // ✅ Debug line
+}
 // ----------------- SHOW PAGE -----------------
 function showpage(pageId) {
   const pages = document.querySelectorAll('.page');
