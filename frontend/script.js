@@ -20,7 +20,8 @@ function updateNavbar() {
     .then(data => {
       const navLinks = document.querySelectorAll('.nav a');
       navLinks.forEach(link => {
-        const page = link.getAttribute('onclick');
+        const page = link.getAttribute('onclick') || ''; // 🛠️ fix null issue
+
         if (page.includes("'signup'") || page.includes("'login'")) {
           link.style.display = data.loggedIn ? 'none' : 'inline-block';
         } else {
