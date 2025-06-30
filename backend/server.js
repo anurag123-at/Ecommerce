@@ -23,9 +23,10 @@ app.use(express.static(path.join(__dirname, '../frontend')));
 
 // CORS (allow frontend access)
 app.use(cors({
-  origin: 'https://ecommerce-d0gpt3889-anurag-tiwaris-projects-299dbd2a.vercel.app',
+  origin: 'https://ecommerce-psi-lyart-27.vercel.app',
   credentials: true
 }));
+
 
 // Parse incoming JSON
 app.use(express.json());
