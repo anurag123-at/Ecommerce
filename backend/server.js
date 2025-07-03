@@ -43,16 +43,18 @@ app.use(express.json());
 //   }
 // }));
 
+app.set('trust proxy', 1); // 🛡️ Trust proxy when behind Render's load balancer
+
 app.use(session({
-  secret: 'yourSecretKey',
+  secret: 'your-secret',
   resave: false,
   saveUninitialized: false,
   cookie: {
-    secure: true,         // Required for HTTPS
-    sameSite: 'none'      // Required for cross-origin
+    sameSite: 'none',     // 👈 required for cross-origin
+    secure: true,         // 👈 required for HTTPS (Vercel + Render are HTTPS)
+    maxAge: 24 * 60 * 60 * 1000
   }
 }));
-
 
 // ✅ Routes (after session is set up)
 app.use('/api/users', userRoutes);
